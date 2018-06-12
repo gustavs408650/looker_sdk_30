@@ -519,7 +519,7 @@ class LookApi(object):
             
         # Added to swagger-codegen code, as Swagger 2 spec only supports a single respone type per endpoint
         if result_format in ['png', 'jpg']:
-            result_format = 'file
+            result_format = 'file'
         else:
             result_format = 'str'
 
