@@ -219,7 +219,12 @@ class RESTClientObject(object):
             # In the python 3, the response.data is bytes.
             # we need to decode it to string.
             if six.PY3:
-                r.data = r.data.decode('utf8')
+                
+                # Try-Except added to swagger-codegen code, to handle 'file' response types
+                try:
+                    r.data = r.data.decode('utf8')
+                except UnicodeDecodeError:
+                    r.data = r.data
 
             # log response body
             logger.debug("response body: %s", r.data)
