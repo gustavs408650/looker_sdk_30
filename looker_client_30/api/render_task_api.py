@@ -698,7 +698,7 @@ class RenderTaskApi(object):
                  returns the request thread.
         """
 
-        all_params = ['render_task_id']  # noqa: E501
+        all_params = ['render_task_id', 'result_format']  # Added result_format to handle file downloads
         all_params.append('async')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -723,6 +723,15 @@ class RenderTaskApi(object):
         path_params = {}
         if 'render_task_id' in params:
             path_params['render_task_id'] = params['render_task_id']  # noqa: E501
+            
+        # Add handling for result_format to swagger-codegen code
+        if 'result_format' in params:
+            if params['result_foramt'] in ['pdf', 'png', 'jpg']:
+                result_format = 'file'
+            else:
+                result_format = 'str'
+        else:
+            result_format = 'str'
 
         query_params = []
 
@@ -751,7 +760,7 @@ class RenderTaskApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='str',  # noqa: E501
+            response_type=result_format,  # changed from swagger_codegen
             auth_settings=auth_settings,
             async=params.get('async'),
             _return_http_data_only=params.get('_return_http_data_only'),
