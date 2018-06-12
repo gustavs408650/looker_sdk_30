@@ -726,7 +726,7 @@ class RenderTaskApi(object):
             
         # Add handling for result_format to swagger-codegen code
         if 'result_format' in params:
-            if params['result_foramt'] in ['pdf', 'png', 'jpg']:
+            if params['result_format'] in ['pdf', 'png', 'jpg']:
                 result_format = 'file'
             else:
                 result_format = 'str'
