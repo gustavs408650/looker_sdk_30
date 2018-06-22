@@ -516,6 +516,12 @@ class LookApi(object):
         if ('result_format' not in params or
                 params['result_format'] is None):
             raise ValueError("Missing the required parameter `result_format` when calling `run_look`")  # noqa: E501
+            
+        # Added to swagger-codegen code, as Swagger 2 spec only supports a single respone type per endpoint
+        if result_format in ['png', 'jpg']:
+            result_format = 'file'
+        else:
+            result_format = 'str'
 
         collection_formats = {}
 
@@ -576,7 +582,7 @@ class LookApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='str',  # noqa: E501
+            response_type=result_format,  # Changed from swagger-codegen
             auth_settings=auth_settings,
             async=params.get('async'),
             _return_http_data_only=params.get('_return_http_data_only'),
