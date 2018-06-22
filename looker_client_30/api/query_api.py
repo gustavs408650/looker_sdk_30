@@ -885,6 +885,12 @@ class QueryApi(object):
         if 'result_format' in params:
             path_params['result_format'] = params['result_format']  # noqa: E501
 
+            # Added to swagger-codegen code, as Swagger 2 spec only supports a single respone type per endpoint
+            if result_format in ['png', 'jpg']:
+                result_format = 'file'
+            else:
+                result_format = 'str'
+
         query_params = []
         if 'limit' in params:
             query_params.append(('limit', params['limit']))  # noqa: E501
@@ -938,7 +944,7 @@ class QueryApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='str',  # noqa: E501
+            response_type=result_format,  # Added to swagger-codegen code
             auth_settings=auth_settings,
             async=params.get('async'),
             _return_http_data_only=params.get('_return_http_data_only'),
